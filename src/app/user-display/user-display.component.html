@@ -1,0 +1,16 @@
+<div class="container">
+    <h2>display profile</h2>
+    
+    <div *ngIf="users.length === 0; else elseBlock">
+       <p class="error">No users to display</p>
+    </div>
+    <ng-template #elseBlock >
+      <div *ngFor="let user of users" [ngSwitch]="user.occupation" class="userSection">
+         <div [ngClass]="getOccupationClass(user.occupation)">
+           <h3>{{user.name}}</h3>
+           <p>Age :{{user.age}}</p>
+           <p>Occupation : {{user.occupation}}</p>    
+        </div>
+      </div>
+    </ng-template>
+   </div>

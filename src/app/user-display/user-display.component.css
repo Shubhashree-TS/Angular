@@ -1,0 +1,36 @@
+.container {
+    margin:10px;
+    background:rgba(1,0.4,0.5,0.2);
+    padding:10px;
+    border-radius:5px;
+  }
+
+  .error {
+    color:red;
+  }
+
+  .form {
+    margin: auto;
+
+  }
+
+  .userSection {
+    padding:5px;
+    background:white;
+  }
+  .frontend {
+    color:navy;
+    padding: 10px;
+  }
+  
+  .backend {
+    color:purple;
+    padding: 10px;
+    
+  }
+  
+  .other {
+    color:black;
+    padding: 10px;
+       
+  }

@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="form">
+    <h2>User input</h2>
+    <label>Name:</label><br />
+    <input
+      [(ngModel)]="user.name"
+      placeholder="Enter name"
+      required
+    /><br /><br />
+
+    <label>Age:</label><br />
+    <input
+      type="number"
+      [(ngModel)]="user.age"
+      placeholder="Enter age"
+      required
+    /><br /><br />
+
+    <label>Occupation:</label><br />
+    <input
+      [(ngModel)]="user.occupation"
+      placeholder="Enter Occupation"
+      required
+    /><br /><br />
+
+    <button (click)="submit()">Add user</button>
+  </div>
+</div>
