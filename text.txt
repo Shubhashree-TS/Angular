@@ -79,3 +79,242 @@ greetUser(){
 }
 
 
+ng new user-management-app
+cd user-management-app
+
+
+ng generate component add-user
+ng generate component delete-user
+ng generate component display-user
+
+
+ng generate service user
+
+
+routingmodule.ts 
+
+// app-routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AddUserComponent } from './add-user/add-user.component';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { DisplayUserComponent } from './display-user/display-user.component';
+
+const routes: Routes = [
+  { path: 'add-user', component: AddUserComponent },
+  { path: 'delete-user', component: DeleteUserComponent },
+  { path: 'display-user', component: DisplayUserComponent },
+  { path: '', redirectTo: '/display-user', pathMatch: 'full' }, // Default route
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+
+
+
+add user component 
+// add-user.component.ts
+
+import { Component } from '@angular/core';
+import { UserService } from '../user.service';
+
+@Component({
+  selector: 'app-add-user',
+  templateUrl: './add-user.component.html',
+  styleUrls: ['./add-user.component.css'],
+})
+export class AddUserComponent {
+  constructor(private userService: UserService) {}
+
+  // Implement the logic for adding a user
+}
+
+
+
+
+service
+// user.service.ts
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+  private users: any[] = [];
+
+  getUsers() {
+    return this.users;
+  }
+
+  addUser(user: any) {
+    this.users.push(user);
+  }
+
+  deleteUser(index: number) {
+    this.users.splice(index, 1);
+  }
+}
+
+
+addUser
+// add-user.component.ts
+
+import { Component } from '@angular/core';
+import { UserService } from '../user.service';
+
+@Component({
+  selector: 'app-add-user',
+  templateUrl: './add-user.component.html',
+  styleUrls: ['./add-user.component.css'],
+})
+export class AddUserComponent {
+  userName: string = '';
+  age: number | undefined;
+  occupation: string = '';
+
+  constructor(private userService: UserService) {}
+
+  addUser() {
+    const newUser = {
+      userName: this.userName,
+      age: this.age,
+      occupation: this.occupation,
+    };
+
+    this.userService.addUser(newUser);
+    // Clear the form fields
+    this.userName = '';
+    this.age = undefined;
+    this.occupation = '';
+  }
+}
+
+
+
+deleteUser
+// delete-user.component.ts
+
+import { Component } from '@angular/core';
+import { UserService } from '../user.service';
+
+@Component({
+  selector: 'app-delete-user',
+  templateUrl: './delete-user.component.html',
+  styleUrls: ['./delete-user.component.css'],
+})
+export class DeleteUserComponent {
+  users: any[] = [];
+
+  constructor(private userService: UserService) {
+    this.users = userService.getUsers();
+  }
+
+  deleteUser(index: number) {
+    this.userService.deleteUser(index);
+  }
+}
+
+
+display user
+// display-user.component.ts
+
+import { Component } from '@angular/core';
+import { UserService } from '../user.service';
+
+@Component({
+  selector: 'app-display-user',
+  templateUrl: './display-user.component.html',
+  styleUrls: ['./display-user.component.css'],
+})
+export class DisplayUserComponent {
+  users: any[] = [];
+
+  constructor(private userService: UserService) {
+    this.users = userService.getUsers();
+  }
+}
+
+
+
+html 
+<!-- add-user.component.html -->
+
+<div>
+  <h2>Add User</h2>
+  <form (ngSubmit)="addUser()">
+    <label for="userName">User Name:</label>
+    <input type="text" id="userName" [(ngModel)]="userName" required />
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" [(ngModel)]="age" required />
+
+    <label for="occupation">Occupation:</label>
+    <input type="text" id="occupation" [(ngModel)]="occupation" required />
+
+    <button type="submit">Add User</button>
+  </form>
+</div>
+
+
+
+
+<!-- delete-user.component.html -->
+
+<div>
+  <h2>Delete User</h2>
+  <ul>
+    <li *ngFor="let user of users; let i = index">
+      {{ user.userName }} ({{ user.age }} years, {{ user.occupation }})
+      <button (click)="deleteUser(i)">Delete</button>
+    </li>
+  </ul>
+</div>
+
+
+<!-- display-user.component.html -->
+
+<div>
+  <h2>Display Users</h2>
+  <div *ngIf="users.length > 0; else noUsers">
+    <ul>
+      <li *ngFor="let user of users">
+        {{ user.userName }} ({{ user.age }} years, {{ user.occupation }})
+      </li>
+    </ul>
+  </div>
+  <ng-template #noUsers>
+    <p>No users to display.</p>
+  </ng-template>
+</div>
+
+
+
+
+// app.module.ts
+
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    // ...
+  ],
+  imports: [
+    FormsModule,
+    // ...
+  ],
+})
+
+
+// app-routing.module.ts
+
+const routes: Routes = [
+  { path: 'add-user', component: AddUserComponent },
+  { path: 'delete-user', component: DeleteUserComponent },
+  { path: 'display-user', component: DisplayUserComponent },
+  { path: '', redirectTo: '/display-user', pathMatch: 'full' }, // Default route
+];
