@@ -1,0 +1,17 @@
+<h1>Display user</h1>
+<div *ngIf="users.length > 0 ; else noUsers">
+    <ul>
+        <li *ngFor="let user of users">
+            <div [ngSwitch]="user.occupation">
+                <div *ngSwitchCase="'Developer'" class="developer">Name : {{ user.userName }} <br> Age : {{ user.age }} <br> Occupation : {{ user.occupation }}</div>
+                <div *ngSwitchCase="'Designer'" class="designer">Name : {{ user.name }} <br> Age : {{ user.age }} <br> Occupation : {{ user.occupation }}</div>
+                <div *ngSwitchDefault class="other">Name : {{ user.name }} <br> Age : {{ user.age }} <br> Occupation : {{ user.occupation }}</div>
+              </div>
+        </li>
+    </ul>
+</div>
+<ng-template #noUsers >
+        <p>No users to Display</p>
+    </ng-template>
+
+

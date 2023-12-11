@@ -1,0 +1,21 @@
+.container {
+    padding:10px;
+    margin:5px;
+    font-size: large;
+    background-color: rgb(255, 255, 255);
+}
+
+.error {
+    color:red;
+}
+
+
+.main-container {
+    padding:10px;
+    background-color: rgb(222, 218, 213);
+    margin:10px;
+    border-radius: 5px;
+}
+.developer { color: green; }
+.designer { color: blue; }
+.other { color: black; }
