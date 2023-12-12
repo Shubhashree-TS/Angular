@@ -1,6 +1,7 @@
 
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-user',
@@ -12,7 +13,7 @@ export class AddUserComponent {
 userName:string='';
 age:number=0;
 occupation:string='';
-constructor(private userservice:UserService){
+constructor(private userservice:UserService, private router: Router){
 
 }
 
@@ -28,9 +29,15 @@ addUser(){
       return 
     }
     this.userservice.addUser(newUser);
-    this.userName='';
-    this.age=0;
-    this.occupation='';
+    if (this.userservice.getUser().length > 0) {
+      // Clear the form fields
+      this.userName = '';
+      this.age = 0;
+      this.occupation = '';
+
+      // Navigate to the delete page
+      this.router.navigate(['/deleteuser']);
+    }
   }
 
  

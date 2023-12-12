@@ -1,12 +1,17 @@
 <h1>Delete User</h1>
+
 <div *ngIf="users.length > 0 ; else noUsers">
     <ul>
         <li *ngFor="let user of users ; let i = index">
             {{user.userName}} {{user.age}} {{user.occupation}}
             <button (click)="deleteUser(i)">Delete User</button>
+           
         </li>
     </ul>
 </div>
 <ng-template #noUsers>
     <p>No users to Delete</p>
 </ng-template>
+<a routerLink="/adduser" routerLinkActive="active" ariaCurrentWhenActive="page"><button>Form to Add User</button></a>
+<a routerLink="/displayuser" routerLinkActive="active" ariaCurrentWhenActive="page"><button>Display User Page</button></a>
+
