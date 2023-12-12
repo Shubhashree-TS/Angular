@@ -318,3 +318,104 @@ const routes: Routes = [
   { path: 'display-user', component: DisplayUserComponent },
   { path: '', redirectTo: '/display-user', pathMatch: 'full' }, // Default route
 ];
+
+ng generate service user-guard
+
+// user-guard.service.ts
+
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+import { UserService } from './user.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserGuard implements CanActivate {
+  constructor(private userService: UserService, private router: Router) {}
+
+  canActivate(): boolean {
+    const hasUserInfo = this.userService.getUsers().length > 0;
+
+    if (!hasUserInfo) {
+      alert('Please fill in all the fields in the Add User page.');
+      this.router.navigate(['/add-user']);
+    }
+
+    return hasUserInfo;
+  }
+}
+
+// app-routing.module.ts
+
+import { UserGuard } from './user-guard.service';
+
+const routes: Routes = [
+  { path: 'add-user', component: AddUserComponent },
+  {
+    path: 'delete-user',
+    component: DeleteUserComponent,
+    canActivate: [UserGuard], // Apply the guard
+  },
+  { path: 'display-user', component: DisplayUserComponent },
+  { path: '', redirectTo: '/display-user', pathMatch: 'full' },
+];
+
+
+// app.module.ts
+
+import { UserGuard } from './user-guard.service';
+
+@NgModule({
+  providers: [UserGuard],
+  // ...
+})
+
+
+// app.module.ts
+
+import { UserGuard } from './user-guard.service';
+
+@NgModule({
+  providers: [UserGuard],
+  // ...
+})
+
+// add-user.component.ts
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../user.service';
+
+@Component({
+  selector: 'app-add-user',
+  templateUrl: './add-user.component.html',
+  styleUrls: ['./add-user.component.css'],
+})
+export class AddUserComponent {
+  userName: string = '';
+  age: number | undefined;
+  occupation: string = '';
+
+  constructor(private userService: UserService, private router: Router) {}
+
+  addUser() {
+    const newUser = {
+      userName: this.userName,
+      age: this.age,
+      occupation: this.occupation,
+    };
+
+    this.userService.addUser(newUser);
+
+    // Check if user information is added successfully
+    if (this.userService.getUsers().length > 0) {
+      // Clear the form fields
+      this.userName = '';
+      this.age = undefined;
+      this.occupation = '';
+
+      // Navigate to the delete page
+      this.router.navigate(['/delete-user']);
+    }
+  }
+}
