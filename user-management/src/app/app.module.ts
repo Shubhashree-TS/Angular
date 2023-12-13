@@ -27,7 +27,7 @@ import { UserGuard } from './user-guard.service';
     NgbModule,
     FontAwesomeModule
   ],
-  providers: [UserGuard],
+  providers: [UserGuard,UserGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
