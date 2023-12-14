@@ -18,7 +18,6 @@ constructor(private userservice:UserService, private router: Router){
 }
 
 
-
 addUser(){
   const newUser= {
     userName:this.userName,
@@ -29,15 +28,14 @@ addUser(){
       return 
     }
     this.userservice.addUser(newUser);
-    if (this.userservice.getUser().length > 0) {
+    this.userservice.isUserAdded=true;
+    
+
       // Clear the form fields
       this.userName = '';
       this.age = 0;
       this.occupation = '';
-
-      // Navigate to the delete page
-      this.router.navigate(['/deleteuser']);
-    }
+    
   }
 
  

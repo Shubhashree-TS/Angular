@@ -5,6 +5,7 @@ import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { DisplayUserComponent } from './display-user/display-user.component';
 import { PageNotfoundComponent } from './page-notfound/page-notfound.component';
 import { UserGuard} from './user-guard.service';
+import {guardGuard} from './guards/guard.guard';
 
 
 const routes: Routes = [
@@ -12,11 +13,11 @@ const routes: Routes = [
   {
     path: 'deleteuser',
     component: DeleteUserComponent,
-    canActivate: [UserGuard], // Apply the guard
+    canActivate: [guardGuard]// Apply the guard
   },
   {path:'displayuser',component:DisplayUserComponent},
   {path:'',redirectTo:'/adduser',pathMatch:'full'},
-  {path:'**',component:PageNotfoundComponent},//default route
+  // {path:'**',component:PageNotfoundComponent},//default route
 ];
 
 @NgModule({
